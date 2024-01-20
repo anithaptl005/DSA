@@ -1,2 +1,3 @@
 
-<img style="float:left" width="1260" alt="image" src="https://github.com/anithaptl005/DSA/assets/78895224/94a5bf13-3c52-46de-bf4c-b621eace3231">
+<img width="1329" alt="image" src="https://github.com/anithaptl005/DSA/assets/78895224/bc225f54-b03a-4b1e-b187-dbc89c0eb0f6">
+
