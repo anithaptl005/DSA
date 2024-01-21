@@ -24,3 +24,31 @@ class Solution {
     }
 
 }
+
+/** 
+space optimisation
+**/
+
+class Solution {
+
+    public int rob(int[] nums) {
+         if(nums.length==0) return 0;
+        if(nums.length == 1) return nums[0];
+        return Math.max( robhelper(nums, 0, nums.length-2), robhelper(nums, 1, nums.length-1) );
+    }
+
+     public int robhelper(int[] nums,int ind, int n) {
+       
+        int first=0;
+        int second=0;
+        int result=0;
+        for(int i=ind;i<=n;i++)
+        {
+            result=Math.max(second+nums[i],first);
+            second=first;
+            first=result;
+        }
+      return  first;
+      
+    }
+}
