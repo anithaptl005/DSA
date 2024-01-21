@@ -1,0 +1,26 @@
+// https://leetcode.com/problems/house-robber-ii/
+/** 
+resursion - runtime -TLE
+**/
+
+class Solution {
+
+    public int rob(int[] nums) {
+       if(nums.length==1) return nums[0];
+    
+       return Math.max(helperRob(0,nums.length-1,nums),helperRob(1,nums.length,nums));
+    }
+
+    public int helperRob(int ind1,int n, int[] nums){
+        if(ind1>=n)return 0;
+
+        //inc
+        int inc=nums[ind1]+helperRob(ind1+2,n,nums);
+
+        //exc
+        int exc=helperRob(ind1+1,n,nums);
+
+        return Math.max(inc,exc);
+    }
+
+}
