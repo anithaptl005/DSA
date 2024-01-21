@@ -1,0 +1,24 @@
+// https://leetcode.com/problems/house-robber/
+
+/** 
+recursion
+**/
+class Solution {
+    public int rob(int[] nums) {
+      return  helperRob(nums.length-1,nums);
+        
+    }
+
+    public int helperRob(int ind, int[] nums){
+        if(ind<0) return 0;
+
+        //inc
+        int inc = nums[ind]+helperRob(ind-2,nums);
+
+        //exc
+        int exc = helperRob(ind-1,nums);
+
+        return  Math.max(inc,exc);
+
+    }
+}
