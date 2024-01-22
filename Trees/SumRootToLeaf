@@ -1,0 +1,36 @@
+// https://leetcode.com/problems/sum-root-to-leaf-numbers/
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int sumNumbers(TreeNode root) {
+       return helperSumNumbers(root,0);
+    }
+
+    public int helperSumNumbers(TreeNode root, int num){
+      //base condition
+        if(root==null) return 0;
+
+      // or condition should hold good if also only one branch is present
+        if(root.left!=null ||root.right!=null){
+           return helperSumNumbers(root.left,num*10+root.val)+helperSumNumbers(root.right,num*10+root.val);
+        }
+      //to add leaf node
+        return num*10+root.val; 
+
+/** no popping back from curr or something because not array **/
+    }
+}
