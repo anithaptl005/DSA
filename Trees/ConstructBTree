@@ -1,0 +1,96 @@
+//https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        int s=preorder.length;
+        HashMap<Integer,Integer> map=new HashMap<Integer,Integer>();
+        for(int i=0;i<s;i++){
+            map.put(inorder[i],i);
+        }
+
+      return  helperBuildTree(preorder,0,s-1,inorder,0,s-1,map);
+        
+    }
+
+    public TreeNode helperBuildTree(int[] preorder,int pre_st,int pre_end, int[] inorder,int in_st, int in_end,HashMap<Integer,Integer> map){
+        if(pre_st>pre_end || in_st>in_end){
+            return null;
+        }
+
+
+        TreeNode root=new TreeNode(preorder[pre_st]);
+        int root_ind=map.get(preorder[pre_st]);
+        int ind_nums_left=root_ind-in_st;
+
+        //left tree
+        root.left=  helperBuildTree(preorder,pre_st+1 ,pre_st+ind_nums_left, inorder,in_st, root_ind-1,map);
+        //right tree
+        root.right=helperBuildTree(preorder,pre_st+ind_nums_left+1 ,pre_end , inorder,root_ind+1, in_end,map);
+
+        return root;
+       
+    }
+}
+
+/**
+https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/
+**/
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        int s=inorder.length;
+        HashMap<Integer,Integer> map=new HashMap<Integer,Integer>();
+        for(int i=0;i<s;i++){
+            map.put(inorder[i],i);
+        }
+
+      return  helperBuildTree(inorder,0,s-1,postorder,0,s-1,map);
+    }
+
+     public TreeNode helperBuildTree(int[] inorder,int in_st,int in_end, int[] postorder,int post_st, int post_end,HashMap<Integer,Integer> map){
+         if(in_st>in_end || post_st>post_end) return null;
+
+        TreeNode root=new TreeNode(postorder[post_end]);
+        int root_ind=map.get(postorder[post_end]);
+        int nums_left=root_ind-in_st;
+
+
+        //left tree
+        root.left=helperBuildTree(inorder,in_st,root_ind-1,postorder,post_st,post_st+nums_left-1,map);
+
+        //right tree
+        root.right=helperBuildTree(inorder,root_ind+1,in_end,postorder,post_st+nums_left,post_end-1,map);
+
+        return root;
+     }
+}
