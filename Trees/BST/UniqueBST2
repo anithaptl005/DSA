@@ -1,0 +1,49 @@
+//https://leetcode.com/problems/unique-binary-search-trees-ii/
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<TreeNode> generateTrees(int n) {
+      return  generateTreesHelper(1,n);
+    }
+
+    public List<TreeNode> generateTreesHelper(int start, int end){
+        List<TreeNode> res=new ArrayList<>();
+        if(start>end) {
+            res.add(null);
+            return res;
+        }
+        if(start==end){
+            res.add(new TreeNode(start));
+            return res;
+        }
+        TreeNode root;
+
+        for(int i=start;i<=end;i++){
+             List<TreeNode> left = generateTreesHelper(start,i-1);
+             List<TreeNode> right = generateTreesHelper(i+1,end);
+             for(TreeNode rnode:right){
+                 for(TreeNode lnode:left){
+                        root=new TreeNode(i);
+                        root.right=rnode;
+                        root.left=lnode;
+                        res.add(root);
+                 }
+             }
+        }
+        return res;
+    }
+}
