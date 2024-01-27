@@ -39,3 +39,50 @@ class Solution {
         return false;
     }
 }
+
+
+/**
+Using adjacency list and DFS
+*/
+class Solution {
+    public boolean validPath(int n, int[][] edges, int source, int destination) {
+        Map<Integer, List<Integer>> graph = new HashMap<>();
+        boolean[] vis =new boolean[n];
+
+        for(int[] edge:edges){
+            int u=edge[0];
+            int v=edge[1];
+            graph.computeIfAbsent(u, value->new ArrayList<>()).add(v);
+            graph.computeIfAbsent(v, value->new ArrayList<>()).add(u);
+        }
+
+      return  validPathHelper(graph,source,destination,vis);
+
+        
+    }
+
+    public boolean validPathHelper(Map<Integer, List<Integer>> graph,int source, int destination,boolean[] vis){
+        if(source==destination){
+            return true;
+        }
+        vis[source]=true;
+
+        /*
+        for(int i=0;i<n;i++){
+            if(graph[source][i]==1 && !vis[i]){
+                if(validPathHelper(n,graph,i,destination,vis)){
+                    return true;
+                }
+            }
+        }
+        */
+        for(int neighbor : graph.get(source)) {
+            if(!vis[neighbor]) {
+                if(validPathHelper(graph, neighbor, destination, vis))
+                    return true;
+            }
+        }
+
+        return false;
+    }
+}
