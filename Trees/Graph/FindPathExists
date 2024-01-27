@@ -1,0 +1,41 @@
+//https://leetcode.com/problems/find-if-path-exists-in-graph/
+/**
+using DFS and adjacency matrix
+*/
+class Solution {
+    public boolean validPath(int n, int[][] edges, int source, int destination) {
+        int[][] dp=new int[n][n];
+        boolean[] vis =new boolean[n];
+        for(int[] row:dp){
+            Arrays.fill(row,0);
+        }
+
+        for(int[] edge:edges){
+            int u=edge[0];
+            int v=edge[1];
+            dp[u][v]=1;
+            dp[v][u]=1;
+        }
+
+      return  validPathHelper(n,dp,source,destination,vis);
+
+        
+    }
+
+    public boolean validPathHelper(int n,int[][] graph,int source, int destination,boolean[] vis){
+        if(source==destination){
+            return true;
+        }
+        vis[source]=true;
+
+        for(int i=0;i<n;i++){
+            if(graph[source][i]==1 && !vis[i]){
+                if(validPathHelper(n,graph,i,destination,vis)){
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+}
