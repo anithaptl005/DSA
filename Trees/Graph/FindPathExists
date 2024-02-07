@@ -86,3 +86,86 @@ class Solution {
         return false;
     }
 }
+
+
+/** 
+BFS using adjacency matrix
+
+**/
+
+class Solution {
+    public boolean validPath(int n, int[][] edges, int source, int destination) {
+        boolean [][] graph=new boolean[n][n];
+        for(boolean[] row:graph){
+            Arrays.fill(row,false);
+        }
+
+        for(int[] edge:edges){
+            int u=edge[0];int v=edge[1];
+            graph[u][v]=true;
+            graph[v][u]=true;
+        }
+
+        boolean[] vis=new boolean[n];
+        
+        for(int i=0;i<n;i++){
+            vis[i]=false;
+        }
+        Queue<Integer> q=new LinkedList<>();
+        q.add(source);
+
+        while(!q.isEmpty()){
+            int curr=q.remove();
+            if(curr==destination) return true;
+            for(int i=0;i<n;i++){
+                if(graph[curr][i]==true && !vis[i]){
+                    q.add(i);
+                    vis[i]=true;
+                }
+            }
+        }
+        return false;
+    }
+
+}
+
+
+/**
+
+BFS adjacency List
+
+**/
+
+class Solution {
+    public boolean validPath(int n, int[][] edges, int source, int destination) {
+        Map<Integer,List<Integer>> graph=new HashMap<>();
+
+        for(int[] edge:edges){
+            int u=edge[0];int v=edge[1];
+            graph.computeIfAbsent(u,value->new ArrayList<>()).add(v);
+            graph.computeIfAbsent(v,value->new ArrayList<>()).add(u);
+        }
+
+        boolean[] vis=new boolean[n];
+        
+        for(int i=0;i<n;i++){
+            vis[i]=false;
+        }
+        Queue<Integer> q=new LinkedList<>();
+        q.add(source);
+        vis[source]=true;
+
+        while(!q.isEmpty()){
+            int curr=q.remove();
+            if(curr==destination) return true;
+            for(int neighbour:graph.get(curr)){
+                if(!vis[neighbour]){
+                    q.add(neighbour);
+                    vis[neighbour]=true;
+                }
+            }
+        }
+        return false;
+    }
+
+}
